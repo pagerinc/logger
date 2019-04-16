@@ -83,8 +83,15 @@ describe('Logger', () => {
 
         beforeEach(() => {
 
+            internals.scope = {
+                setLevel: () => {}
+            },
             internals.sentryQueue = [];
             internals.sentryStream = {
+                withScope: (fn) => {
+
+                    fn(internals.scope);
+                },
                 captureEvent: (event) => {
 
                     internals.sentryQueue.push(event);
@@ -115,7 +122,7 @@ describe('Logger', () => {
         it('should not crash on sentry log failures', () => {
 
             const sentry = {
-                captureEvent: () => {
+                withScope: () => {
 
                     throw new Error('sentry issue');
                 }
