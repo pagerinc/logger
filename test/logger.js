@@ -68,7 +68,6 @@ describe('Logger', () => {
         const logger = Logger.createLogger({ prettyPrint: true }, internals.nonJsonStream);
         logger.info({ this: { is: 'a' }, nested: { json: 'object', with: { many: { many: { many: 'levels' } } } } });
         expect(internals.queue).to.have.length(1);
-        console.log(internals.queue[0]);
     });
 
     it('should log pretty print with additional args', () => {
@@ -84,7 +83,7 @@ describe('Logger', () => {
         beforeEach(() => {
 
             internals.scope = {
-                setLevel: () => {}
+                setExtras: () => {}
             },
             internals.sentryQueue = [];
             internals.sentryStream = {
@@ -97,6 +96,9 @@ describe('Logger', () => {
                     internals.sentryQueue.push(event);
                 }
             };
+            internals.hub = {
+                getCurrentHub: () => internals.sentryStream
+            };
         });
 
         afterEach(() => {
@@ -107,22 +109,32 @@ describe('Logger', () => {
 
         it('should not trigger sentry on info', () => {
 
-            const logger = Logger.createLogger({ prettyPrint: false, sentry: internals.sentryStream });
+            const logger = Logger.createLogger({ prettyPrint: false, sentry: internals.hub });
             logger.info('a non error log');
             expect(internals.sentryQueue).to.have.length(0);
         });
 
         it('should trigger sentry on error', () => {
 
-            const logger = Logger.createLogger({ prettyPrint: false, sentry: internals.sentryStream });
+            const logger = Logger.createLogger({ prettyPrint: false, sentry: internals.hub });
             logger.error(new Error('test error'));
-            expect(internals.sentryQueue).to.have.length(1);
+
+            // parsing is async so wait a few iterations
+            // should find a better way
+            return new Promise((resolve) => {
+
+                setTimeout(() => {
+
+                    expect(internals.sentryQueue).to.have.length(1);
+                    resolve();
+                }, 500);
+            });
         });
 
         it('should not crash on sentry log failures', () => {
 
             const sentry = {
-                withScope: () => {
+                getSentryHub: () => {
 
                     throw new Error('sentry issue');
                 }

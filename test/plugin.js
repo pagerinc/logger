@@ -151,7 +151,7 @@ describe('Plugin', () => {
         const server = new Hapi.Server();
         await server.register({
             plugin: Plugin,
-            options: { pino: { prettyPrint: false } }
+            options: { pino: { prettyPrint: false }, sentry: { sentry: {} } }
         });
         server.log(['info'], 'stdout log');
         server.log(['info'], { test: 'my test object' });
