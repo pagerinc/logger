@@ -59,7 +59,7 @@ Already configured pino object
 Return error and stacktrace along with `500` response as a payload. Useful in non-production environments.
 _Default: false_
 
-## Installation
+## Installation and Usage
 
 *Non-Hapi*
 ```javascript
