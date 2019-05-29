@@ -21,7 +21,7 @@ This library has been set up with an array of standard redactions based on curre
 | LOG_LEVEL | `info` | Lowest level to log in this order: `trace`, `debug`, `info`, `warn`, `error`, `fatal` |
 | LOG_ERROR_THRESHOLD | `error` | Lowest error to send to error transport |
 | LOG_PRETTY_PRINT | _none_ | Set to `1` to enable pretty print - this is *not* json and follows the configuration for [prettyPrint docs](https://github.com/pinojs/pino-pretty#pino-pretty) |
-| LOG_EXPOSE_ERRORS | _none_ | (Hapi plugin only) Expose errors in the `HTTP 500` range to be exposed to callers |
+| LOG_EXPOSE_ERRORS | _none_ | (Hapi plugin only) Set to `1` to expose errors to callers in the `HTTP 500` range |
 
 *Non-hapi*:
 ```javascript
