@@ -44,7 +44,7 @@ describe('Logger', () => {
 
     it('should redact default fields with custom logger', () => {
 
-        const logger = Logger.createLogger({ prettyPrint: false }, internals.destinationStream);
+        const logger = Logger.createLogger({ }, internals.destinationStream);
         logger.info({ password: 'my secret', other: 'asdf', headers: { authorization: 'what' } }, 'a message');
         expect(internals.queue).to.have.length(1);
         expect(internals.queue[0].password).to.equal('[Redacted]');
@@ -63,11 +63,20 @@ describe('Logger', () => {
         expect(internals.queue[0].other).to.equal('asdf');
     });
 
-    it('should log pretty print on dev by default', () => {
+    it('should log pretty print when configured without destination', () => {
+
+        const logger = Logger.createLogger({ prettyPrint: true });
+        logger.info({ password: 'my secret', other: 'asdf', headers: { authorization: 'what' } }, 'a message');
+        // we are not catching the stream output here, because we are testing a path without a destination injected
+        // so if `.info` doesn't through we have reached our testing limit
+    });
+
+    it('should log pretty print when configured', () => {
 
         const logger = Logger.createLogger({ prettyPrint: true }, internals.nonJsonStream);
         logger.info({ this: { is: 'a' }, nested: { json: 'object', with: { many: { many: { many: 'levels' } } } } });
         expect(internals.queue).to.have.length(1);
+        expect(() => JSON.parse(internals.queue[0])).to.throw(); // pretty print is not json
     });
 
     it('should log pretty print with additional args', () => {
@@ -109,14 +118,14 @@ describe('Logger', () => {
 
         it('should not trigger sentry on info', () => {
 
-            const logger = Logger.createLogger({ prettyPrint: false, sentry: internals.hub });
+            const logger = Logger.createLogger({ sentry: internals.hub });
             logger.info('a non error log');
             expect(internals.sentryQueue).to.have.length(0);
         });
 
         it('should trigger sentry on error', () => {
 
-            const logger = Logger.createLogger({ prettyPrint: false, sentry: internals.hub });
+            const logger = Logger.createLogger({ sentry: internals.hub });
             logger.error(new Error('test error'));
 
             // parsing is async so wait a few iterations
@@ -139,7 +148,7 @@ describe('Logger', () => {
                     throw new Error('sentry issue');
                 }
             };
-            const logger = Logger.createLogger({ prettyPrint: false, sentry });
+            const logger = Logger.createLogger({ sentry });
             logger.error(new Error('test error')); // if this passes, we captured the error correctly
         });
     });

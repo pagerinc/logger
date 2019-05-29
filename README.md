@@ -14,11 +14,14 @@ Works as both a service worker logger or a Hapi plugin - both of which use stand
 
 This library has been set up with an array of standard redactions based on current usage. Each app should explicitly append and detail all potential leaks. There are no wildcard defaults because there are large associated performance issues with wildcards, particularly intermediate wildcards. Please do your part in log security to ensure no PHI or secrets are leaked into the logs; defaults provided in the code are append only.
 
-## Pretty-print
+## Environment
 
-Pretty print is auto-set to true when `NODE_ENV` is not `production` - which excludes any hosted pager environment which sets that to default. So any local development or test logs will include pretty-print auto-configured. To manually turn this off for any reason, set prettyPrint in pino options below according to the [prettyPrint docs](https://github.com/pinojs/pino-pretty#pino-pretty).
-
-### Configuration
+| Name | Default | Description |
+|------|---------|-------------|
+| LOG_LEVEL | `info` | Lowest level to log in this order: `trace`, `debug`, `info`, `warn`, `error`, `fatal` |
+| LOG_ERROR_THRESHOLD | `error` | Lowest error to send to error transport |
+| LOG_PRETTY_PRINT | _none_ | Set to `1` to enable pretty print - this is *not* json and follows the configuration for [prettyPrint docs](https://github.com/pinojs/pino-pretty#pino-pretty) |
+| LOG_EXPOSE_ERRORS | _none_ | (Hapi plugin only) Expose errors in the `HTTP 500` range to be exposed to callers |
 
 *Non-hapi*:
 ```javascript
@@ -28,7 +31,7 @@ Pretty print is auto-set to true when `NODE_ENV` is not `production` - which exc
 }
 ```
 
-#### pino options
+### pino options
 Pino default overrides per [Pino's documentation](https://github.com/pinojs/pino/blob/master/docs/api.md#options-object).
 
 *Hapi*
@@ -44,13 +47,13 @@ Pino default overrides per [Pino's documentation](https://github.com/pinojs/pino
 }
 ```
 
-#### pino (Object)
+### pino (Object)
 Pino configuration object per [Pino's documentation](https://github.com/pinojs/pino/blob/master/docs/api.md#options-object)
 
-#### instance (pino object)
+### instance (pino object)
 Already configured pino object
 
-#### exposeErrors (boolean)
+### exposeErrors (boolean)
 Return error and stacktrace along with `500` response as a payload. Useful in non-production environments.
 _Default: false_
 
@@ -58,7 +61,7 @@ _Default: false_
 
 *Hapi*
 
-For 90% of projects, there will be no configuration needed, the plugin will do all the heavy lifting, and you can use the existing hapi `server.log` and `request.log` that you know and love.
+For 90% of projects, there will be no configuration needed, the plugin will do all the heavy lifting, and you can use the existing hapi `server.log` and `request.log` that you know and love. You can extract the logging instance for injection by `server.logger()` function or the `require.logger` object - see [Hapi Pino docs](https://github.com/pinojs/hapi-pino#server-decorations) for details.
 ```javascript
 const Hapi = require('hapi');
 const LogPlugin = require('@pagerinc/logger/plugin');
@@ -85,23 +88,26 @@ server.log(['info'], { request: 'please log', response: 'hapi logging ^_^' });
 
 *Non-Hapi*
 ```javascript
-// importing default logger is best practice for most cases
+// injecting a logger is best practice for most cases, defaulting to singleton is acceptable
 const Logger = require('@pager/logger');
 
-Logger.info('Worker log');
+module.exports = (logger = Logger) => {
 
-// .. worker works ...
-try {
-    // do work
-}
-catch (err) {
-    Logger.error(err);
-}
+    Logger.info('Worker log');
+
+    // .. worker works ...
+    try {
+        // do work
+    }
+    catch (err) {
+        logger.error(err);
+    }
+};
 ```
 
 *Custom*
 ```javascript
-const Logger = require('@pager/logger');
+const Logger = require('@pager/logger/lib/logger');
 const MyCustomPrettyPrintLogger = Logger.createLogger({ prettyPrint: { colorize: false } });
 MyCustomPrettyPrintLogger.info('pretty print me please');
 ```
