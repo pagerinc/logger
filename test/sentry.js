@@ -3,8 +3,8 @@
 // Load modules
 
 const Sentry = require('../lib/sentry/index');
-const Lab = require('lab');
-const Code = require('code');
+const Lab = require('@hapi/lab');
+const Code = require('@hapi/code');
 const Stream = require('../lib/sentry/stream');
 
 // Test shortcuts

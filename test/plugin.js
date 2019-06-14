@@ -4,11 +4,11 @@
 
 const Plugin = require('../lib/plugin');
 const Logger = require('../lib/logger');
-const Code = require('code');
-const Hapi = require('hapi');
-const Lab = require('lab');
+const Code = require('@hapi/code');
+const Hapi = require('@hapi/hapi');
+const Lab = require('@hapi/lab');
 const Stream = require('stream');
-const Joi = require('joi');
+const Joi = require('@hapi/joi');
 
 const internals = {};
 
