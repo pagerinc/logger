@@ -1,6 +1,6 @@
 {
   "name": "@pager/logger",
-  "version": "5.1.0",
+  "version": "5.1.1",
   "description": "Logging library",
   "keywords": [
     "logs"
