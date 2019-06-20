@@ -32,5 +32,10 @@
     "@hapi/hapi": "18.x.x",
     "@hapi/lab": "18.x.x"
   },
-  "main": "lib/index.js"
+  "main": "lib/index.js",
+  "renovate": {
+    "extends": [
+      "github>pagerinc/renovate-config"
+    ]
+  }
 }
