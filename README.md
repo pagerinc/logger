@@ -64,7 +64,7 @@ _Default: false_
 For 90% of projects, there will be no configuration needed, the plugin will do all the heavy lifting, and you can use the existing hapi `server.log` and `request.log` that you know and love. You can extract the logging instance for injection by `server.logger()` function or the `require.logger` object - see [Hapi Pino docs](https://github.com/pinojs/hapi-pino#server-decorations) for details.
 ```javascript
 const Hapi = require('hapi');
-const LogPlugin = require('@pagerinc/logger/plugin');
+const LogPlugin = require('@pager/logger/lib/plugin');
 
 const server = new Hapi.Server();
 await server.register(LogPlugin);
