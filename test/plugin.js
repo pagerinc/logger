@@ -147,15 +147,33 @@ describe('Plugin', () => {
         expect(internals.queue).to.have.length(0);
     });
 
-    it('should use default logger if none supplied without error', async () => {
+    it('should use default logger and sentry if none supplied without error', async () => {
 
         const server = new Hapi.Server();
         await server.register({
             plugin: Plugin,
-            options: { pino: { prettyPrint: false }, sentry: { sentry: {} } }
+            options: { pino: { prettyPrint: false } }
         });
         server.log(['info'], 'stdout log');
         server.log(['info'], { test: 'my test object' });
+    });
+
+    it('should use custom sentry if one supplied', async () => {
+
+        let configured = false;
+        const sentry = {
+            configureScope: () => {
+
+                configured = true;
+            }
+        };
+
+        const server = new Hapi.Server();
+        await server.register({
+            plugin: Plugin,
+            options: { pino: { prettyPrint: false }, sentry: { sentry } }
+        });
+        expect(configured).to.be.true();
     });
 
     it('should return an error if configured', async () => {
