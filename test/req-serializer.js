@@ -19,7 +19,7 @@ describe('reqSerializer', () => {
     before(() => {
 
         internals.req = {
-            raw:{
+            raw: {
                 app: 'api-core',
                 path: '/logout',
                 route: '/logout',
