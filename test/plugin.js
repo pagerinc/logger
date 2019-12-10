@@ -226,9 +226,9 @@ describe('Plugin', () => {
             config: {
                 handler: (request, h) => 1,
                 validate: {
-                    payload: {
+                    payload: Joi.object({
                         key: Joi.number().integer()
-                    }
+                    })
                 }
             }
         });
