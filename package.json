@@ -26,11 +26,11 @@
     "pino-multi-stream": "4.x"
   },
   "devDependencies": {
-    "@hapi/code": "7.x",
-    "@hapi/eslint-config-hapi": "12.x",
+    "@hapi/code": "8.x",
+    "@hapi/eslint-config-hapi": "13.x",
     "@hapi/eslint-plugin-hapi": "4.x",
     "@hapi/hapi": "18.x",
-    "@hapi/lab": "21.x",
+    "@hapi/lab": "22.x",
     "@types/hapi__code": "5.x",
     "@types/hapi__hapi": "18.x",
     "@types/hapi__hoek": "6.x",
