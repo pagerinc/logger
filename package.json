@@ -18,7 +18,7 @@
     "test-cov-xml": "lab -r junit -o coverage.xml"
   },
   "dependencies": {
-    "@hapi/hoek": "8.x",
+    "@hapi/hoek": "9.x",
     "@hapi/joi": "16.x",
     "@sentry/node": "5.x",
     "hapi-pino": "6.x",
