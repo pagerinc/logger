@@ -29,7 +29,7 @@
     "@hapi/code": "8.x",
     "@hapi/eslint-config-hapi": "13.x",
     "@hapi/eslint-plugin-hapi": "4.x",
-    "@hapi/hapi": "18.x",
+    "@hapi/hapi": "19.x",
     "@hapi/lab": "22.x",
     "@types/hapi__code": "5.x",
     "@types/hapi__hapi": "18.x",
