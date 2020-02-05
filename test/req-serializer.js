@@ -1,14 +1,10 @@
 'use strict';
 
-// Load modules
-
 const Code = require('@hapi/code');
 const Lab = require('@hapi/lab');
-const { reqSerializer } = require('../lib/req-serializer');
+const ReqSerializer = require('../lib/req-serializer');
 
 const internals = {};
-
-// Test shortcuts
 
 const lab = exports.lab = Lab.script();
 const { after, before, it, describe } = lab;
@@ -40,7 +36,12 @@ describe('reqSerializer', () => {
 
     it('should return a subset of the hapi request object', () => {
 
-        const req = reqSerializer(internals.req);
+        const req = ReqSerializer(internals.req);
+        expect(req.path).to.exist();
+        expect(req.route).to.exist();
+        expect(req.httpVersion).to.exist();
+        expect(req.instance).to.exist();
+        expect(req.source).to.exist();
         expect(req.app).to.equal(undefined);
     });
 });
