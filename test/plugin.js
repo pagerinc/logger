@@ -27,7 +27,7 @@ describe('Plugin', () => {
         internals.destinationStream = new Stream.Writable({
             write: (chunk, encoding, next) => {
 
-                queue.push(JSON.parse(chunk.toString()));
+                queue.push(chunk.toString().trim());
                 next();
             }
         });
@@ -91,7 +91,12 @@ describe('Plugin', () => {
 
         internals.server.log(['info'], 'test');
         expect(internals.queue).to.have.length(1); // server start log
-        expect(internals.queue[0].data).to.equal('test');
+
+        for (const s of internals.queue) {
+            expect(s).to.equal(JSON.stringify(JSON.parse(s)));
+        }
+
+        expect(JSON.parse(internals.queue[0]).data).to.equal('test');
     });
 
     it('should log a request', async () => {
@@ -102,9 +107,14 @@ describe('Plugin', () => {
         };
         const response = await internals.server.inject(request);
 
+        for (const s of internals.queue) {
+            expect(s.trim()).to.equal(JSON.stringify(JSON.parse(s)));
+        }
+
+        const jsonQueue = internals.queue.map((s) => JSON.parse(s));
         expect(response.statusCode).to.equal(200);
-        expect(internals.queue).to.have.length(2); // request complete log
-        expect(internals.queue[0].data).to.equal('this is a request log');
+        expect(jsonQueue).to.have.length(2); // request complete log
+        expect(jsonQueue[0].data).to.equal('this is a request log');
     });
 
     it('should log an error', async () => {
@@ -115,13 +125,14 @@ describe('Plugin', () => {
         };
         const response = await internals.server.inject(request);
 
+        const parsed = JSON.parse(internals.queue[0]);
         expect(response.statusCode).to.equal(500);
         expect(internals.queue).to.have.length(2);
-        expect(internals.queue[0].err.message).to.equal('some error');
-        expect(internals.queue[0].err.stack).to.exist();
+        expect(parsed.err.message).to.equal('some error');
+        expect(parsed.err.stack).to.exist();
     });
 
-    it('should log an error', async () => {
+    it('should log an rejection', async () => {
 
         const request = {
             method: 'GET',
@@ -129,10 +140,11 @@ describe('Plugin', () => {
         };
         const response = await internals.server.inject(request);
 
+        const parsed = JSON.parse(internals.queue[0]);
         expect(response.statusCode).to.equal(500);
         expect(internals.queue).to.have.length(2);
-        expect(internals.queue[0].err.message).to.equal('some rejection');
-        expect(internals.queue[0].err.stack).to.exist();
+        expect(parsed.err.message).to.equal('some rejection');
+        expect(parsed.err.stack).to.exist();
     });
 
     it('should not log ignored paths', async () => {
