@@ -10,15 +10,12 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-
       - restore_cache:
           key: v1-dependencies-{{ checksum "package.json" }}
-
       - run: npm install
       - run:
           name: Run tests
-          command: npm test
-
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc && npm test
       - persist_to_workspace:
           root: ~/repo
           paths: .
