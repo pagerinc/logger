@@ -14,10 +14,10 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=test" > ~/repo/.npmrc
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
       - run: 
           name: Install Dependencies
-          command: cat ~/repo/.npmrc && npm install
+          command: npm install
       - run:
           name: Run tests
           command: npm test
