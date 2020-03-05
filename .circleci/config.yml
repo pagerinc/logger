@@ -12,9 +12,6 @@ jobs:
       - checkout
       - restore_cache:
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run:
-          name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
       - run: 
           name: Install Dependencies
           command: npm install
