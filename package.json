@@ -22,7 +22,7 @@
     "@hapi/joi": "17.x",
     "@sentry/node": "5.x",
     "hapi-pino": "6.x",
-    "pino": "5.x",
+    "pino": "6.x",
     "pino-multi-stream": "4.x"
   },
   "devDependencies": {
