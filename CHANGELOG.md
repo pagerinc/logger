@@ -1,3 +1,10 @@
+## [5.7.11](https://github.com/pagerinc/logger/compare/v5.7.10...v5.7.11) (2020-07-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency pino-multi-stream to v5 ([b8f35c6](https://github.com/pagerinc/logger/commit/b8f35c6f80979f20f8fa36825ed5f1391fcc7530))
+
 ## [5.7.10](https://github.com/pagerinc/logger/compare/v5.7.9...v5.7.10) (2020-07-27)
 
 
