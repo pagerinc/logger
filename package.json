@@ -23,7 +23,7 @@
     "@sentry/node": "5.x",
     "hapi-pino": "8.x",
     "pino": "6.x",
-    "pino-multi-stream": "4.x"
+    "pino-multi-stream": "5.x"
   },
   "devDependencies": {
     "@hapi/code": "8.x",
