@@ -1,3 +1,10 @@
+## [5.7.10](https://github.com/pagerinc/logger/compare/v5.7.9...v5.7.10) (2020-07-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency hapi-pino to v8 ([e9d819c](https://github.com/pagerinc/logger/commit/e9d819ccbe7587df9eb2085f0c2ec11633801f7b))
+
 ## [5.7.9](https://github.com/pagerinc/logger/compare/v5.7.8...v5.7.9) (2020-07-27)
 
 
