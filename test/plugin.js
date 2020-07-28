@@ -54,6 +54,35 @@ describe('Plugin', () => {
                 }
             },
             {
+                method: 'POST',
+                path: '/',
+                handler: (request, h) => {
+
+                    request.log(['info'], request.payload);
+                    return {};
+                }
+            },
+            {
+                method: 'POST',
+                path: '/boom',
+                handler: (request, h) => {
+
+                    const throws = () => {
+
+                        throw new Error('whoops!');
+                    };
+
+                    try {
+                        throws();
+                    }
+                    catch (err) {
+                        err.payload = request.payload;
+                        request.log(['error'], err);
+                        throw err;
+                    }
+                }
+            },
+            {
                 method: 'GET',
                 path: '/throw',
                 handler: (request, h) => {
@@ -118,6 +147,58 @@ describe('Plugin', () => {
         expect(jsonQueue[0].data).to.equal('this is a request log');
     });
 
+    it('should censor payloads when logging', async () => {
+
+        const request = {
+            method: 'POST',
+            url: '/',
+            payload: { password: 'foo' }
+        };
+        const response = await internals.server.inject(request);
+
+        for (const s of internals.queue) {
+            expect(s.trim()).to.equal(JSON.stringify(JSON.parse(s)));
+        }
+
+        const jsonQueue = internals.queue.map((s) => JSON.parse(s));
+        expect(response.statusCode).to.equal(200);
+        expect(jsonQueue).to.have.length(2); // request complete log
+        expect(jsonQueue[0].data).to.equal({ password: '[Redacted]' });
+    });
+
+    it('should censor uncaught exceptions', async () => {
+
+        const server = internals.server;
+
+        const request = {
+            method: 'POST',
+            url: '/boom',
+            payload: {
+                user: {
+                    email: 'foo@example.com',
+                    password: 'thisShouldBeRedacted'
+                }
+            }
+        };
+
+        const response = await server.inject(request);
+
+        expect(response.statusCode).to.equal(500);
+
+        const jsonQueue = internals.queue.map((s) => JSON.parse(s));
+
+        expect(jsonQueue.length).to.equal(3);
+
+        expect(jsonQueue[0].data).to.equal('request error');
+        expect(jsonQueue[0].err).to.include({
+            type: 'Error',
+            message: 'whoops!',
+            payload: {
+                user: { email: 'foo@example.com', password: '[Redacted]' }
+            }
+        });
+    });
+
     it('should log an error', async () => {
 
         const request = {
@@ -127,6 +208,7 @@ describe('Plugin', () => {
         const response = await internals.server.inject(request);
 
         const parsed = JSON.parse(internals.queue[0]);
+
         expect(response.statusCode).to.equal(500);
         expect(internals.queue).to.have.length(2);
         expect(parsed.err.message).to.equal('some error');
