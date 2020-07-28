@@ -2,13 +2,14 @@
 
 // Load modules
 
-const Plugin = require('../lib/plugin');
-const Logger = require('../lib/logger');
 const Code = require('@hapi/code');
 const Hapi = require('@hapi/hapi');
+const Joi = require('@hapi/joi');
 const Lab = require('@hapi/lab');
 const Stream = require('stream');
-const Joi = require('@hapi/joi');
+
+const Plugin = require('../lib/plugin');
+const Logger = require('../lib/logger');
 
 const internals = {};
 
@@ -186,46 +187,6 @@ describe('Plugin', () => {
             options: { pino: { prettyPrint: false }, sentry: { sentry } }
         });
         expect(configured).to.be.true();
-    });
-
-    it('should return an error if configured', async () => {
-
-        const server = new Hapi.Server();
-
-        server.route({
-            method: 'GET',
-            path: '/throw-promise',
-            handler: async (request, h) => {
-
-                await Promise.reject(new Error('some rejection'));
-            }
-        });
-        const queue = [];
-        await server.register({
-            plugin: Plugin,
-            options: {
-                exposeErrors: true,
-                instance: Logger.createLogger({ prettyPrint: false }, new Stream.Writable({
-                    write: (chunk, encoding, next) => {
-
-                        queue.push(JSON.parse(chunk.toString()));
-                        next();
-                    }
-                }))
-            }
-        });
-
-        const request = {
-            method: 'GET',
-            url: '/throw-promise'
-        };
-
-        const response = await server.inject(request);
-        const payload = JSON.parse(response.payload);
-
-        expect(response.statusCode).to.equal(500);
-        expect(payload.details.message).to.equal('some rejection');
-        expect(payload.details.stack).to.exist();
     });
 
     it('should not affect non-500 in this plugin', async () => {
