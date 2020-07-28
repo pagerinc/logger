@@ -21,7 +21,6 @@ This library has been set up with an array of standard redactions based on curre
 | LOG_LEVEL | `info` | Lowest level to log in this order: `trace`, `debug`, `info`, `warn`, `error`, `fatal` |
 | LOG_ERROR_THRESHOLD | `error` | Lowest error to send to error transport |
 | LOG_PRETTY_PRINT | _none_ | Set to `1` to enable pretty print - this is *not* json and follows the configuration for [prettyPrint docs](https://github.com/pinojs/pino-pretty#pino-pretty) |
-| LOG_EXPOSE_ERRORS | _none_ | (Hapi plugin only) Set to `1` to expose errors to callers in the `HTTP 500` range |
 
 *Non-hapi*:
 ```javascript
@@ -53,15 +52,12 @@ Pino configuration object per [Pino's documentation](https://github.com/pinojs/p
 ### instance (pino object)
 Already configured pino object
 
-### exposeErrors (boolean)
-Return error and stacktrace along with `500` response as a payload. Useful in non-production environments.
-_Default: false_
-
 ## Installation and Usage
 
 *Hapi*
 
 For 90% of projects, there will be no configuration needed, the plugin will do all the heavy lifting, and you can use the existing hapi `server.log` and `request.log` that you know and love. You can extract the logging instance for injection by `server.logger` function or the `require.logger` object - see [Hapi Pino docs](https://github.com/pinojs/hapi-pino#server-decorations) for details.
+
 ```javascript
 const Hapi = require('hapi');
 const LogPlugin = require('@pager/logger/lib/plugin');
@@ -70,20 +66,21 @@ const server = new Hapi.Server();
 await server.register(LogPlugin);
 
 server.log(['info'], { request: 'please log', response: 'hapi logging ^_^' });
-// {
-//    "level": 30,
-//    "time": 1550778694025,
-//    "pid": 74042,
-//    "hostname": "securitys-MacBook-Pro.local",
-//    "tags": [
-//        "info"
-//    ],
-//    "data": {
-//        "request": "please log",
-//        "response": "hapi logging ^_^"
-//    },
-//    "v": 1
-// }
+
+/*
+{
+    "level": 30,
+    "time": 1550778694025,
+    "pid": 74042,
+    "hostname": "securitys-MacBook-Pro.local",
+    "tags": ["info"],
+    "data": {
+        "request": "please log",
+        "response": "hapi logging ^_^"
+    },
+    "v": 1
+}
+*/
 ```
 
 *Non-Hapi*
@@ -110,4 +107,33 @@ module.exports = (logger = Logger) => {
 const Logger = require('@pager/logger/lib/logger');
 const MyCustomPrettyPrintLogger = Logger.createLogger({ prettyPrint: { colorize: false } });
 MyCustomPrettyPrintLogger.info('pretty print me please');
+```
+
+### Accessing Log Streams Directly
+
+Hapi provides several request lifecycle extension points which can be used to access request and response streams directly.
+
+Keep in mind this is highly discouraged for production environments and typically comes at the expense of the app's performance.
+
+For example, if you need access to a more detailed error trace when debugging, you can bypass any redacted fields by attaching directly to the `onPreResponse` event, eg:
+
+
+```javascript
+/// Return error and stacktrace along with `500` response as a payload.
+
+// **Do not use this on production environments,**
+
+server.ext('onPreResponse', (request, h) => {
+
+    if (request.response.isBoom && request.response.output.statusCode >= 500) {
+        request.response.output.payload.details = {
+            message: request.response.message,
+            url: request.url.path,
+            headers: Hoek.clone(request.raw.req.headers),
+            stack: request.response.stack
+        };
+    }
+
+    return h.continue;
+});
 ```
