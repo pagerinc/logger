@@ -60,7 +60,16 @@ describe('Sentry', () => {
             const error = { err: new Error('test') };
             const next = () => {
 
-                expect(capturedEvent).to.exist();
+                expect(capturedEvent).to.equal({
+                    exception: {
+                        values: [{
+                            stacktrace: { frames: [] },
+                            type: 'Object',
+                            value: ''
+                        }]
+                    },
+                    extra: { err: {} }
+                });
                 resolve();
             };
 
