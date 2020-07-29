@@ -1,3 +1,10 @@
+# [5.8.0](https://github.com/pagerinc/logger/compare/v5.7.11...v5.8.0) (2020-07-29)
+
+
+### Features
+
+* remove detailed error options ([b9a3541](https://github.com/pagerinc/logger/commit/b9a354137e0f06d784274b38a5a0f79980e10c94))
+
 ## [5.7.11](https://github.com/pagerinc/logger/compare/v5.7.10...v5.7.11) (2020-07-27)
 
 
