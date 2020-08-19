@@ -19,9 +19,9 @@
   },
   "dependencies": {
     "@hapi/hoek": "9.x",
-    "@hapi/joi": "17.x",
     "@sentry/node": "5.x",
     "hapi-pino": "8.x",
+    "joi": "^17.2.1",
     "pino": "6.x",
     "pino-multi-stream": "5.x"
   },
