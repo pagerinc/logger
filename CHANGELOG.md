@@ -1,3 +1,10 @@
+## [5.8.1](https://github.com/pagerinc/logger/compare/v5.8.0...v5.8.1) (2020-08-29)
+
+
+### Bug Fixes
+
+* test joi require, deps update ([#203](https://github.com/pagerinc/logger/issues/203)) ([bb523d0](https://github.com/pagerinc/logger/commit/bb523d078b6d6d79ca2d724f9d849d0ebe3f30e3))
+
 # [5.8.0](https://github.com/pagerinc/logger/compare/v5.7.11...v5.8.0) (2020-07-29)
 
 
