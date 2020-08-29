@@ -18,19 +18,19 @@
     "test-cov-xml": "lab -r junit -o coverage.xml"
   },
   "dependencies": {
-    "@hapi/hoek": "9.x",
-    "@sentry/node": "5.x",
-    "hapi-pino": "8.x",
+    "@hapi/hoek": "^9.0.4",
+    "@sentry/node": "^5.22.3",
+    "hapi-pino": "^8.2.0",
     "joi": "^17.2.1",
     "pino": "6.x",
     "pino-multi-stream": "5.x"
   },
   "devDependencies": {
-    "@hapi/code": "8.x",
-    "@hapi/eslint-config-hapi": "13.x",
-    "@hapi/eslint-plugin-hapi": "4.x",
-    "@hapi/hapi": "19.x",
-    "@hapi/lab": "22.x",
+    "@hapi/code": "^8.0.2",
+    "@hapi/eslint-config-hapi": "^13.0.2",
+    "@hapi/eslint-plugin-hapi": "^4.3.5",
+    "@hapi/hapi": "^20.0.0",
+    "@hapi/lab": "^23.0.0",
     "@pager/semantic-release-config": "1.x",
     "@types/hapi__code": "8.x",
     "@types/hapi__hapi": "20.x",
