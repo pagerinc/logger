@@ -1,3 +1,10 @@
+## [5.8.2](https://github.com/pagerinc/logger/compare/v5.8.1...v5.8.2) (2020-09-01)
+
+
+### Bug Fixes
+
+* remove lab leaks detection ([#207](https://github.com/pagerinc/logger/issues/207)) ([9749ca9](https://github.com/pagerinc/logger/commit/9749ca937fbb7fa2ad82b0b3934a8bce91c782f3))
+
 ## [5.8.1](https://github.com/pagerinc/logger/compare/v5.8.0...v5.8.1) (2020-08-29)
 
 
