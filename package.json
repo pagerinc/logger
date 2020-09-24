@@ -30,7 +30,7 @@
     "@hapi/eslint-config-hapi": "^13.0.2",
     "@hapi/eslint-plugin-hapi": "^4.3.5",
     "@hapi/hapi": "^20.0.0",
-    "@hapi/lab": "^23.0.0",
+    "@hapi/lab": "^24.0.0",
     "@pager/semantic-release-config": "1.x",
     "@types/hapi__code": "8.x",
     "@types/hapi__hapi": "20.x",
