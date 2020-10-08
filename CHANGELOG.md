@@ -1,3 +1,10 @@
+## [5.8.3](https://github.com/pagerinc/logger/compare/v5.8.2...v5.8.3) (2020-10-08)
+
+
+### Bug Fixes
+
+* use fatal before process exit ([#247](https://github.com/pagerinc/logger/issues/247)) ([16405e3](https://github.com/pagerinc/logger/commit/16405e350993bbbb01f0a24fdb7148bccd09a336))
+
 ## [5.8.2](https://github.com/pagerinc/logger/compare/v5.8.1...v5.8.2) (2020-09-01)
 
 
