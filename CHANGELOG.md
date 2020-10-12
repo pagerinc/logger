@@ -1,3 +1,10 @@
+# [5.9.0](https://github.com/pagerinc/logger/compare/v5.8.3...v5.9.0) (2020-10-12)
+
+
+### Features
+
+* [EA-603] add correlation/request id to request log ([#252](https://github.com/pagerinc/logger/issues/252)) ([77640d2](https://github.com/pagerinc/logger/commit/77640d2173a537b66f3a6a434f4b92ad60bbb2c3))
+
 ## [5.8.3](https://github.com/pagerinc/logger/compare/v5.8.2...v5.8.3) (2020-10-08)
 
 
