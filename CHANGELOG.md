@@ -1,3 +1,10 @@
+# [5.10.0](https://github.com/pagerinc/logger/compare/v5.9.0...v5.10.0) (2020-10-23)
+
+
+### Features
+
+* send error threshold to stderr ([#267](https://github.com/pagerinc/logger/issues/267)) ([cbe35da](https://github.com/pagerinc/logger/commit/cbe35da28229e30e2bd531641294d64187b230dc))
+
 # [5.9.0](https://github.com/pagerinc/logger/compare/v5.8.3...v5.9.0) (2020-10-12)
 
 
