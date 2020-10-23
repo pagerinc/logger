@@ -1,11 +1,8 @@
 'use strict';
 
 module.exports = {
-    extends: '@hapi/eslint-config-hapi',
-    parserOptions: {
-        ecmaVersion: 9
-    },
+    extends: '@pager/eslint-config',
     rules: {
-        'key-spacing': 1
+        'no-console': 0
     }
 };

@@ -2,6 +2,7 @@
 
 const Code = require('@hapi/code');
 const Lab = require('@hapi/lab');
+
 const ReqSerializer = require('../lib/req-serializer');
 
 const internals = {};
