@@ -2,10 +2,13 @@
 
 // Load modules
 
-const Logger = require('../lib/logger');
+const Stream = require('stream');
+
 const Code = require('@hapi/code');
 const Lab = require('@hapi/lab');
-const Stream = require('stream');
+
+const Logger = require('../lib/logger');
+
 
 const internals = {};
 

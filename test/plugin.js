@@ -1,9 +1,10 @@
 'use strict';
 
+const Stream = require('stream');
+
 const Code = require('@hapi/code');
 const Hapi = require('@hapi/hapi');
 const Lab = require('@hapi/lab');
-const Stream = require('stream');
 const Joi = require('joi');
 
 const Plugin = require('../lib/plugin');

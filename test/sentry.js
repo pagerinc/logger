@@ -2,9 +2,10 @@
 
 // Load modules
 
-const Sentry = require('../lib/sentry/index');
 const Lab = require('@hapi/lab');
 const Code = require('@hapi/code');
+
+const Sentry = require('../lib/sentry/index');
 const Stream = require('../lib/sentry/stream');
 
 // Test shortcuts
@@ -67,8 +68,7 @@ describe('Sentry', () => {
                             type: 'Object',
                             value: ''
                         }]
-                    },
-                    extra: { err: {} }
+                    }
                 });
                 resolve();
             };
