@@ -1,14 +1,10 @@
 'use strict';
 
-// Load modules
-
 const Lab = require('@hapi/lab');
 const Code = require('@hapi/code');
 
 const Sentry = require('../lib/sentry/index');
 const Stream = require('../lib/sentry/stream');
-
-// Test shortcuts
 
 const lab = exports.lab = Lab.script();
 const { it, describe } = lab;

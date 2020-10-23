@@ -1,7 +1,5 @@
 'use strict';
 
-// Load modules
-
 const Stream = require('stream');
 
 const Code = require('@hapi/code');
@@ -9,10 +7,7 @@ const Lab = require('@hapi/lab');
 
 const Logger = require('../lib/logger');
 
-
 const internals = {};
-
-// Test shortcuts
 
 const lab = exports.lab = Lab.script();
 const { afterEach, beforeEach, it, describe } = lab;
