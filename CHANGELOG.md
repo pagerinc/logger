@@ -1,3 +1,10 @@
+## [5.10.1](https://github.com/pagerinc/logger/compare/v5.10.0...v5.10.1) (2020-10-27)
+
+
+### Bug Fixes
+
+* remove unneeded deps ([#272](https://github.com/pagerinc/logger/issues/272)) ([d10bc18](https://github.com/pagerinc/logger/commit/d10bc187309737b3521739d153cfaccc75e445be))
+
 # [5.10.0](https://github.com/pagerinc/logger/compare/v5.9.0...v5.10.0) (2020-10-23)
 
 
