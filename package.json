@@ -27,8 +27,6 @@
   },
   "devDependencies": {
     "@hapi/code": "^8.0.2",
-    "@hapi/eslint-config-hapi": "^13.0.2",
-    "@hapi/eslint-plugin-hapi": "^4.3.5",
     "@hapi/hapi": "^20.0.0",
     "@hapi/lab": "^24.0.0",
     "@pager/eslint-config": "^1.1.1",
