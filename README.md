@@ -137,3 +137,30 @@ server.ext('onPreResponse', (request, h) => {
     return h.continue;
 });
 ```
+
+### Error handling
+
+Under the hood we are using pino's [default error serializer](https://github.com/pinojs/pino-std-serializers/blob/master/lib/err.js). This means it will add extra keys on the error object if present, and are not already used by one of pino's preset keys (e.g. `data`, `message`, `type`, etc.).
+
+For example, see the custom field `context` within the error and it's expected log output:
+```javascript
+
+const entity = { id: '6025827b568bb78e64b83ba2' };
+const error = new Error('my error title');
+error.context = { entityId: entity.id };
+Logger.error(error);
+/* Prints something like:
+  {
+    "level": 50,
+    "time": 1613070971891,
+    "pid": 58541,
+    "hostname": "hostMBP",
+    "context": {
+      "entityId": "6025827b568bb78e64b83ba2"
+    },
+    "stack": "Error: my error title\n    at /projects/edge-api-cc/test/custom-error.js:19:23\n    at Immediate._onImmediate (/projects/edge-api-cc/node_modules/@hapi/lab/lib/runner.js:661:35)\n    at processImmediate (internal/timers.js:461:21)",
+    "type": "Error",
+    "data": "my error title"
+  }
+*/
+```
