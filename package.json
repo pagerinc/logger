@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@hapi/hoek": "^9.0.4",
-    "@sentry/node": "^5.22.3",
+    "@sentry/node": "^6.0.0",
     "hapi-pino": "^8.2.0",
     "joi": "^17.2.1",
     "pino": "6.x",
