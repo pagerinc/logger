@@ -1,3 +1,10 @@
+## [5.10.2](https://github.com/pagerinc/logger/compare/v5.10.1...v5.10.2) (2021-03-09)
+
+
+### Bug Fixes
+
+* **docker:** update dependency @sentry/node to v6 ([#358](https://github.com/pagerinc/logger/issues/358)) ([03756b7](https://github.com/pagerinc/logger/commit/03756b79d0994e9aad8f771756c3769530fcad3c))
+
 ## [5.10.1](https://github.com/pagerinc/logger/compare/v5.10.0...v5.10.1) (2020-10-27)
 
 
